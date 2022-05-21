@@ -14,7 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\src\ExmoNet.Application\ExmoNet.Application.csproj" />
+      <ProjectReference Include="..\ExmoNet.Application\ExmoNet.Application.csproj" />
     </ItemGroup>
 
 </Project>

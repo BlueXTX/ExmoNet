@@ -6,7 +6,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExmoNet.Application", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExmoNet.Application.UnitTests", "tests\ExmoNet.Application.UnitTests\ExmoNet.Application.UnitTests.csproj", "{52DE6405-DCB6-4C63-9C96-8E0428978424}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExmoNet.Cli", "ExmoNet.Cli\ExmoNet.Cli.csproj", "{0313AB29-0984-4E3E-8987-73C3CF52F9D3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExmoNet.Cli", "src\ExmoNet.Cli\ExmoNet.Cli.csproj", "{0313AB29-0984-4E3E-8987-73C3CF52F9D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
