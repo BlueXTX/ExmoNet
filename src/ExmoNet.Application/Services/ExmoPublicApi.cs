@@ -1,13 +1,35 @@
-﻿using ExmoNet.Domain.Models.Public;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+using ExmoNet.Application.Helpers;
+using ExmoNet.Domain.Models.Public;
+using RestSharp;
 
 namespace ExmoNet.Application.Services;
 
 public class ExmoPublicApi
 {
-    public Task<IEnumerable<Deal>> GetTrades(string firstPair, string secondPair)
+    public async Task<IEnumerable<Deal>> GetTrades(string firstCurrency, string secondCurrency)
     {
-        throw new NotImplementedException();
+        var client = ExmoPublicApiHelper.CreateDefaultClient();
+        string pair = $"{firstCurrency}_{secondCurrency}";
+        var request = new RestRequest("trades", Method.Post)
+            .AddContentTypeHeader()
+            .AddParameter("pair", pair);
+        var jsonObject = (await client.ExecuteAsync(request)).ToJsonObject();
+        var jsonArray = jsonObject[pair]?.AsArray();
+        var result = jsonArray.Deserialize<Deal[]>(new JsonSerializerOptions
+                         { NumberHandling = JsonNumberHandling.AllowReadingFromString })
+                     ?? throw new InvalidOperationException();
+
+        foreach (var deal in result)
+        {
+            deal.FirstCurrency = firstCurrency;
+            deal.SecondCurrency = secondCurrency;
+        }
+
+        return result;
     }
+
 
     public Task<OrderBook> GetOrderBook(string firstCurrency, string secondCurrency, int limit)
     {

@@ -4,6 +4,10 @@ namespace ExmoNet.Domain.Models.Public;
 
 public record Deal
 {
+    [JsonIgnore] public string FirstCurrency { get; set; }
+
+    [JsonIgnore] public string SecondCurrency { get; set; }
+
     [JsonPropertyName("trade_id")] public long TradeId { get; set; }
 
     [JsonPropertyName("date")] public long Date { get; set; }

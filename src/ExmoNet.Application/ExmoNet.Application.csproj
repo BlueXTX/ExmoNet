@@ -12,4 +12,8 @@
       <ProjectReference Include="..\ExmoNet.Domain\ExmoNet.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="RestSharp" Version="107.3.0" />
+    </ItemGroup>
+
 </Project>
