@@ -1,4 +1,6 @@
-﻿using System.Text.Json;
+﻿using System.Globalization;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 using ExmoNet.Application.Exceptions;
 using ExmoNet.Application.Helpers;
@@ -20,7 +22,7 @@ public class ExmoPublicApi
         var jsonArray = jsonObject[pair]?.AsArray();
         var result = jsonArray.Deserialize<Deal[]>(new JsonSerializerOptions
                          { NumberHandling = JsonNumberHandling.AllowReadingFromString })
-                     ?? throw new InvalidOperationException();
+                     ?? throw new ResponseToJsonException();
 
         foreach (var deal in result)
         {
@@ -32,9 +34,41 @@ public class ExmoPublicApi
     }
 
 
-    public Task<OrderBook> GetOrderBook(string firstCurrency, string secondCurrency, int limit)
+    public async Task<OrderBook> GetOrderBook(string firstCurrency, string secondCurrency, int limit)
     {
-        throw new NotImplementedException();
+        var client = ExmoApiHelper.CreateDefaultClient();
+        string pair = $"{firstCurrency}_{secondCurrency}";
+        var request = new RestRequest("order_book", Method.Post)
+            .AddContentTypeHeader()
+            .AddParameter("pair", pair)
+            .AddParameter("limit", limit);
+        var jsonObject = (await client.ExecuteAsync(request)).ToJsonObject();
+        var orderBookJsonObject = jsonObject[pair];
+        var result = orderBookJsonObject.Deserialize<OrderBook>(new JsonSerializerOptions
+            { NumberHandling = JsonNumberHandling.AllowReadingFromString });
+        if (result is null) throw new ResponseToJsonException();
+        result.Ask =
+            ConvertArrayToShortDeals(orderBookJsonObject?["ask"]?.AsArray() ?? throw new ResponseToJsonException());
+        result.Bid =
+            ConvertArrayToShortDeals(orderBookJsonObject?["bid"]?.AsArray() ?? throw new ResponseToJsonException());
+        result.FirstCurrency = firstCurrency;
+        result.SecondCurrency = secondCurrency;
+        return result;
+    }
+
+    private IEnumerable<ShortDeal> ConvertArrayToShortDeals(JsonArray jsonArray)
+    {
+        if (jsonArray is null) throw new ArgumentNullException();
+
+        return jsonArray.Select(node => new ShortDeal
+        {
+            Price = decimal.Parse(node?[0]?.ToString() ?? throw new ResponseToJsonException(),
+                CultureInfo.InvariantCulture),
+            Quantity = decimal.Parse(node[1]?.ToString() ?? throw new ResponseToJsonException(),
+                CultureInfo.InvariantCulture),
+            Amount = decimal.Parse(node[2]?.ToString() ?? throw new ResponseToJsonException(),
+                CultureInfo.InvariantCulture)
+        }).ToList();
     }
 
     public Task<IEnumerable<TickerElement>> GetTicker()
@@ -65,18 +99,49 @@ public class ExmoPublicApi
         return response.Data ?? throw new ResponseToJsonException();
     }
 
-    public Task<RequiredAmount> GetRequiredAmount(string firstCurrency, string secondCurrency, int quantity)
+    public async Task<RequiredAmount> GetRequiredAmount(string firstCurrency, string secondCurrency, decimal quantity)
     {
-        throw new NotImplementedException();
+        var client = ExmoApiHelper.CreateDefaultClient();
+        var pair = $"{firstCurrency}_{secondCurrency}";
+        var request = new RestRequest("required_amount", Method.Post)
+            .AddContentTypeHeader()
+            .AddParameter("pair", pair)
+            .AddParameter("quantity", quantity);
+        var response = await client.ExecuteAsync<RequiredAmount>(request);
+
+        if (response.Data is null) throw new ResponseToJsonException();
+        response.Data.FirstCurrency = firstCurrency;
+        response.Data.SecondCurrency = secondCurrency;
+        return response.Data;
     }
 
-    public Task<IEnumerable<Candle>> GetCandlesHistory(string firstCurrency,
+    public async Task<IEnumerable<Candle>> GetCandlesHistory(string firstCurrency,
         string secondCurrency,
         int resolution,
-        DateTime from,
-        DateTime to)
+        DateTimeOffset from,
+        DateTimeOffset to)
     {
-        throw new NotImplementedException();
+        var client = ExmoApiHelper.CreateDefaultClient();
+        var symbol = $"{firstCurrency}_{secondCurrency}";
+        var request = new RestRequest("candles_history")
+            .AddQueryParameter("symbol", symbol)
+            .AddQueryParameter("resolution", resolution)
+            .AddQueryParameter("from", from.ToUnixTimeSeconds())
+            .AddQueryParameter("to", to.ToUnixTimeSeconds());
+
+        var jsonObject = (await client.ExecuteAsync(request)).ToJsonObject();
+        var jsonArray = jsonObject["candles"]?.AsArray();
+        var result = jsonArray.Deserialize<Candle[]>(new JsonSerializerOptions
+                         { NumberHandling = JsonNumberHandling.AllowReadingFromString })
+                     ?? throw new ResponseToJsonException();
+
+        foreach (var candle in result)
+        {
+            candle.FirstCurrency = firstCurrency;
+            candle.SecondCurrency = secondCurrency;
+        }
+
+        return result;
     }
 
     public Task<IEnumerable<CryptoProvider>> GetCryptoProviders()

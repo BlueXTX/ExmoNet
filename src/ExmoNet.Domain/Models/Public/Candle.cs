@@ -4,6 +4,10 @@ namespace ExmoNet.Domain.Models.Public;
 
 public record Candle
 {
+    public string FirstCurrency { get; set; }
+
+    public string SecondCurrency { get; set; }
+
     [JsonPropertyName("t")] public long Time { get; set; }
 
     [JsonPropertyName("o")] public decimal Open { get; set; }
