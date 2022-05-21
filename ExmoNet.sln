@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExmoNet.Domain", "src\ExmoNet.Domain\ExmoNet.Domain.csproj", "{B36D3073-3B53-4788-A2EC-B8253E2FB6B2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExmoNet.Application", "src\ExmoNet.Application\ExmoNet.Application.csproj", "{F080218D-D7CA-4ADE-887C-90B9DAFE587F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{B36D3073-3B53-4788-A2EC-B8253E2FB6B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B36D3073-3B53-4788-A2EC-B8253E2FB6B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B36D3073-3B53-4788-A2EC-B8253E2FB6B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F080218D-D7CA-4ADE-887C-90B9DAFE587F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F080218D-D7CA-4ADE-887C-90B9DAFE587F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F080218D-D7CA-4ADE-887C-90B9DAFE587F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F080218D-D7CA-4ADE-887C-90B9DAFE587F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
