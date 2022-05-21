@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExmoNet.Domain", "ExmoNet.Domain\ExmoNet.Domain.csproj", "{B36D3073-3B53-4788-A2EC-B8253E2FB6B2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExmoNet.Domain", "src\ExmoNet.Domain\ExmoNet.Domain.csproj", "{B36D3073-3B53-4788-A2EC-B8253E2FB6B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
