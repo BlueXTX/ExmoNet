@@ -2,7 +2,7 @@
 
 namespace ExmoNet.Domain.Models.Public;
 
-public record Deal
+public record Trade
 {
     [JsonIgnore] public string FirstCurrency { get; set; }
 
