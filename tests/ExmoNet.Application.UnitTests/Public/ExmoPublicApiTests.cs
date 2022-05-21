@@ -39,7 +39,7 @@ public class ExmoPublicApiTests
     private async Task GetPairsSettingsTest()
     {
         var api = new ExmoPublicApi();
-        var pairsSettings = await api.GetPairSettings();
+        var pairsSettings = await api.GetPairsSettings();
         var settings = pairsSettings.FirstOrDefault(x =>
             x.FirstCurrency == FirstCurrency && x.SecondCurrency == SecondCurrency);
         settings.Should().NotBeNull();
