@@ -1,4 +1,5 @@
-﻿using ExmoNet.Application.Services;
+﻿using System.Text.Json;
+using ExmoNet.Application.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 

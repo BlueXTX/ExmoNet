@@ -21,7 +21,7 @@ public class ExmoPublicApi
         var result = jsonArray.Deserialize<Trade[]>(new JsonSerializerOptions
                          { NumberHandling = JsonNumberHandling.AllowReadingFromString })
                      ?? throw new ResponseToJsonException();
-
+        
         foreach (var deal in result)
         {
             deal.FirstCurrency = firstCurrency;

@@ -25,7 +25,8 @@ public static class ExmoApiHelper
     {
         if (response.Content is null) throw new NoResponseContentException();
 
-        return JsonNode.Parse(response.Content)?.AsObject() ?? throw new ResponseToJsonException();
+        return JsonNode.Parse(response.Content)?.AsObject() 
+               ?? throw new ResponseToJsonException("Can't parse response content json");
     }
 
     internal static IEnumerable<ShortDeal> ConvertJsonArrayToShortDeals(JsonArray jsonArray)
