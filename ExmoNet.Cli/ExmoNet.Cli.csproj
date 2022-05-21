@@ -13,4 +13,8 @@
         <PackageReference Include="ConsoleAppFramework" Version="4.1.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\src\ExmoNet.Application\ExmoNet.Application.csproj" />
+    </ItemGroup>
+
 </Project>
