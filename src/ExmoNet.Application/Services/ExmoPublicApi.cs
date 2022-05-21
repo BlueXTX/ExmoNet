@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
+using ExmoNet.Application.Exceptions;
 using ExmoNet.Application.Helpers;
 using ExmoNet.Domain.Models.Public;
 using RestSharp;
@@ -10,7 +11,7 @@ public class ExmoPublicApi
 {
     public async Task<IEnumerable<Deal>> GetTrades(string firstCurrency, string secondCurrency)
     {
-        var client = ExmoPublicApiHelper.CreateDefaultClient();
+        var client = ExmoApiHelper.CreateDefaultClient();
         string pair = $"{firstCurrency}_{secondCurrency}";
         var request = new RestRequest("trades", Method.Post)
             .AddContentTypeHeader()
@@ -46,14 +47,22 @@ public class ExmoPublicApi
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<string>> GetCurrencies()
+    public async Task<IEnumerable<string>> GetCurrencies()
     {
-        throw new NotImplementedException();
+        var client = ExmoApiHelper.CreateDefaultClient();
+        var request = new RestRequest("currency")
+            .AddContentTypeHeader();
+        var response = await client.ExecuteAsync<IEnumerable<string>>(request);
+        return response.Data ?? throw new ResponseToJsonException();
     }
 
-    public Task<IEnumerable<ExtendedCurrency>> GetExtendedCurrencies()
+    public async Task<IEnumerable<ExtendedCurrency>> GetExtendedCurrencies()
     {
-        throw new NotImplementedException();
+        var client = ExmoApiHelper.CreateDefaultClient();
+        var request = new RestRequest("currency/list/extended")
+            .AddContentTypeHeader();
+        var response = await client.ExecuteAsync<IEnumerable<ExtendedCurrency>>(request);
+        return response.Data ?? throw new ResponseToJsonException();
     }
 
     public Task<RequiredAmount> GetRequiredAmount(string firstCurrency, string secondCurrency, int quantity)
