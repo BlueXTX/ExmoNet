@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExmoNet.Domain", "src\ExmoN
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExmoNet.Application", "src\ExmoNet.Application\ExmoNet.Application.csproj", "{F080218D-D7CA-4ADE-887C-90B9DAFE587F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExmoNet.Application.UnitTests", "tests\ExmoNet.Application.UnitTests\ExmoNet.Application.UnitTests.csproj", "{52DE6405-DCB6-4C63-9C96-8E0428978424}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{F080218D-D7CA-4ADE-887C-90B9DAFE587F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F080218D-D7CA-4ADE-887C-90B9DAFE587F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F080218D-D7CA-4ADE-887C-90B9DAFE587F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52DE6405-DCB6-4C63-9C96-8E0428978424}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52DE6405-DCB6-4C63-9C96-8E0428978424}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52DE6405-DCB6-4C63-9C96-8E0428978424}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52DE6405-DCB6-4C63-9C96-8E0428978424}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
