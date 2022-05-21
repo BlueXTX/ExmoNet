@@ -76,9 +76,26 @@ public class ExmoPublicApi
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<PairSettings>> GetPairSettings()
+    public async Task<IEnumerable<PairSettings>> GetPairSettings()
     {
-        throw new NotImplementedException();
+        var client = ExmoApiHelper.CreateDefaultClient();
+        var request = new RestRequest("pair_settings")
+            .AddContentTypeHeader();
+        var jsonObject = (await client.ExecuteAsync(request)).ToJsonObject();
+        var result = new List<PairSettings>();
+
+        foreach (var keyValuePair in jsonObject)
+        {
+            var obj = keyValuePair.Value.Deserialize<PairSettings>(new JsonSerializerOptions
+                          { NumberHandling = JsonNumberHandling.AllowReadingFromString })
+                      ?? throw new ResponseToJsonException();
+            string[] pair = keyValuePair.Key.Split('_');
+            obj.FirstCurrency = pair[0];
+            obj.SecondCurrency = pair[1];
+            result.Add(obj);
+        }
+
+        return result;
     }
 
     public async Task<IEnumerable<string>> GetCurrencies()
