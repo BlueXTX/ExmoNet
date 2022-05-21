@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace ExmoNet.Domain.Models;
+namespace ExmoNet.Domain.Models.Public;
 
 public record CryptoProvider
 {

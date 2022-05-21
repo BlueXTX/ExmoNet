@@ -1,9 +1,13 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace ExmoNet.Domain.Models;
+namespace ExmoNet.Domain.Models.Public;
 
-public record Ticker
+public record TickerElement
 {
+    [JsonIgnore] public string FirstCurrency { get; set; }
+
+    [JsonIgnore] public string SecondCurrency { get; set; }
+
     [JsonPropertyName("buy_price")] public decimal BuyPrice { get; set; }
 
     [JsonPropertyName("sell_price")] public decimal SellPrice { get; set; }

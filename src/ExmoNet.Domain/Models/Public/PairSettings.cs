@@ -1,9 +1,13 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace ExmoNet.Domain.Models;
+namespace ExmoNet.Domain.Models.Public;
 
 public record PairSettings
 {
+    [JsonIgnore] public string FirstCurrency { get; set; }
+
+    [JsonIgnore] public string SecondCurrency { get; set; }
+
     [JsonPropertyName("min_quantity")] public decimal MinQuantity { get; set; }
 
     [JsonPropertyName("max_quantity")] public decimal MaxQuantity { get; set; }
